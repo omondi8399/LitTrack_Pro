@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-geist-sans: "__Geist_Fallback", "__Geist_Fallback_Fallback";
+  --font-geist-mono: "__Geist_Mono_Fallback", "__Geist_Mono_Fallback_Fallback";
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+  }
+}
+
+body {
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
