@@ -14,18 +14,18 @@ export default function BookPage() {
   const { books, addBook, updateBook, deleteBook } = useBooks();
 
   const genres = useMemo(() => {
-    return Array.from(new Set(books.map(book => book.genre)));
+    return Array.from(new Set(books.map((book) => book.genre)));
   }, [books]);
 
   const filteredBooks = useMemo(() => {
-    return books.filter(book => {
-      const matchesSearch = 
+    return books.filter((book) => {
+      const matchesSearch =
         book.title.toLowerCase().includes(search.toLowerCase()) ||
         book.author.toLowerCase().includes(search.toLowerCase()) ||
         book.description.toLowerCase().includes(search.toLowerCase());
-      
+
       const matchesGenre = !selectedGenre || book.genre === selectedGenre;
-      
+
       return matchesSearch && matchesGenre;
     });
   }, [books, search, selectedGenre]);
@@ -43,7 +43,7 @@ export default function BookPage() {
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:opacity-90 transition-opacity"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-opacity"
         >
           <Plus className="w-5 h-5" />
           <span>Add Book</span>
@@ -57,8 +57,8 @@ export default function BookPage() {
         setGenre={setSelectedGenre}
         genres={genres}
       />
-      
-      <BookList 
+
+      <BookList
         books={filteredBooks}
         setBooks={(updatedBooks) => {
           const updatedBook = updatedBooks.find(
@@ -70,9 +70,9 @@ export default function BookPage() {
         }}
         onDelete={deleteBook}
       />
-      
-      <AddBookModal 
-        isOpen={isModalOpen} 
+
+      <AddBookModal
+        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAdd={addBook}
       />

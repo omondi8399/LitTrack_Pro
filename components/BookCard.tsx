@@ -20,12 +20,12 @@ export default function BookCard({ book, onEdit, onDelete }: Props) {
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-lg transition-shadow duration-300">
         <div className="aspect-[4/3] relative overflow-hidden bg-gray-100 dark:bg-gray-800">
           <img
-            src={book.coverUrl || '/placeholder-book.jpg'}
+            src={book.coverUrl || "/placeholder-book.jpg"}
             alt={book.title}
             className="object-cover w-full h-full"
           />
         </div>
-        
+
         <div className="p-4">
           <div className="flex justify-between items-start mb-2">
             <div>
@@ -47,7 +47,7 @@ export default function BookCard({ book, onEdit, onDelete }: Props) {
             </span>
           </div>
 
-          <button 
+          <button
             onClick={() => setShowDescription(true)}
             className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-4 text-left hover:text-black dark:hover:text-white w-full"
           >
@@ -59,16 +59,16 @@ export default function BookCard({ book, onEdit, onDelete }: Props) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onEdit}
-              className="p-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="p-2 text-blue-500 hover:text-blue-600 transition-colors rounded-lg hover:bg-blue-50 dark:hover:bg-blue-500/10"
             >
               <Pencil className="w-4 h-4" />
             </motion.button>
-            
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowDeleteConfirm(true)}
-              className="p-2 text-gray-600 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-500 transition-colors rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10"
+              className="p-2 text-red-500 hover:text-red-600 transition-colors rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10"
             >
               <Trash2 className="w-4 h-4" />
             </motion.button>
@@ -86,7 +86,10 @@ export default function BookCard({ book, onEdit, onDelete }: Props) {
       />
 
       <Transition show={showDescription} as={Fragment}>
-        <Dialog onClose={() => setShowDescription(false)} className="relative z-50">
+        <Dialog
+          onClose={() => setShowDescription(false)}
+          className="relative z-50"
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
