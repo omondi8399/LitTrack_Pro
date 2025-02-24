@@ -1,6 +1,8 @@
 import { Book } from "@/types";
 import { Pencil, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import ConfirmationModal from "./ConfirmationModal";
 
 interface Props {
   book: Book;
@@ -9,7 +11,10 @@ interface Props {
 }
 
 export default function BookCard({ book, onEdit, onDelete }: Props) {
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
   return (
+    <>
     <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="aspect-[4/3] relative overflow-hidden bg-gray-100 dark:bg-gray-800">
         <img
@@ -57,7 +62,7 @@ export default function BookCard({ book, onEdit, onDelete }: Props) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={onDelete}
+            onClick={() => setShowDeleteConfirm(true)}
             className="p-2 text-gray-600 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-500 transition-colors rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10"
           >
             <Trash2 className="w-4 h-4" />
@@ -65,5 +70,15 @@ export default function BookCard({ book, onEdit, onDelete }: Props) {
         </div>
       </div>
     </div>
+
+    <ConfirmationModal
+      isOpen={showDeleteConfirm}
+      onClose={() => setShowDeleteConfirm(false)}
+      onConfirm={onDelete}
+      title="Delete Book"
+      message="Are you sure you want to delete this book? This action cannot be undone."
+      actionLabel="Delete"
+    />
+  </>
   );
 }

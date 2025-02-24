@@ -6,6 +6,7 @@ import { X, Upload } from "lucide-react";
 import { Book } from "@/types";
 import { toast } from "react-hot-toast";
 import Loader from "./Loader";
+import ConfirmationModal from "./ConfirmationModal";
 
 interface Props {
   isOpen: boolean;
@@ -33,6 +34,8 @@ export default function AddBookModal({
   const [bookData, setBookData] = useState(initialBook);
   const [dragging, setDragging] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
   const [errors, setErrors] = useState<
     Partial<Record<keyof typeof initialBook, string>>
   >({});
@@ -61,31 +64,32 @@ export default function AddBookModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) {
       toast.error("Please fill in all required fields correctly");
       return;
     }
+    setShowConfirmation(true);
+  };
 
+
+  const handleConfirmedSubmit = async () => {
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       onAdd(bookData as Book);
-      toast.success(
-        isEdit ? "Book updated successfully!" : "Book added successfully!"
-      );
+      toast.success(isEdit ? "Book updated successfully!" : "Book added successfully!");
       setBookData(initialBook);
       onClose();
     } catch (error: unknown) {
-        if (error instanceof Error) {
-          toast.error(error.message);
-        } else {
-          toast.error("Something went wrong. Please try again.");
-        }
-      } finally {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
       setIsSubmitting(false);
     }
-  };
+  }; 
 
   const handleFileChange = useCallback((file: File | null) => {
     if (!file) return;
@@ -132,7 +136,8 @@ export default function AddBookModal({
   };
 
   return (
-    <Transition show={isOpen} as={Fragment}>
+    <>
+  <Transition show={isOpen} as={Fragment}>
       <Dialog onClose={onClose} className="relative z-50">
         <Transition.Child
           as={Fragment}
@@ -405,5 +410,20 @@ export default function AddBookModal({
         </div>
       </Dialog>
     </Transition>
+
+
+     <ConfirmationModal
+        isOpen={showConfirmation}
+        onClose={() => setShowConfirmation(false)}
+        onConfirm={handleConfirmedSubmit}
+        title={isEdit ? "Update Book" : "Add New Book"}
+        message={isEdit 
+          ? "Are you sure you want to update this book? This action cannot be undone."
+          : "Are you sure you want to add this book?"
+        }
+        actionLabel={isEdit ? "Update" : "Add"}
+      />
+    </>
+  
   );
 }
