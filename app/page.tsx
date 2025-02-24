@@ -11,7 +11,7 @@ export default function BookPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
-  const { books, addBook, updateBook, deleteBook  } = useBooks();
+  const { books, addBook, updateBook, deleteBook } = useBooks();
 
   const genres = useMemo(() => {
     return Array.from(new Set(books.map(book => book.genre)));
@@ -31,31 +31,34 @@ export default function BookPage() {
   }, [books, search, selectedGenre]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">LitTrack Pro</h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">Manage your book collection effortlessly</p>
-          </div>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:opacity-90 transition-opacity"
-          >
-            <Plus className="w-5 h-5" />
-            <span>Add Book</span>
-          </button>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-xl text-gray-600 dark:text-gray-400">
+            Welcome to
+          </h1>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
+            Your Personal Library
+          </p>
         </div>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:opacity-90 transition-opacity"
+        >
+          <Plus className="w-5 h-5" />
+          <span>Add Book</span>
+        </button>
+      </div>
 
-        <SearchAndFilter
-          search={search}
-          setSearch={setSearch}
-          genre={selectedGenre}
-          setGenre={setSelectedGenre}
-          genres={genres}
-        />
-        
-        <BookList 
+      <SearchAndFilter
+        search={search}
+        setSearch={setSearch}
+        genre={selectedGenre}
+        setGenre={setSelectedGenre}
+        genres={genres}
+      />
+      
+      <BookList 
         books={filteredBooks}
         setBooks={(updatedBooks) => {
           const updatedBook = updatedBooks.find(
@@ -68,12 +71,11 @@ export default function BookPage() {
         onDelete={deleteBook}
       />
       
-        <AddBookModal 
-          isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)}
-          onAdd={addBook}
-        />
-      </div>
+      <AddBookModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        onAdd={addBook}
+      />
     </div>
   );
 }
