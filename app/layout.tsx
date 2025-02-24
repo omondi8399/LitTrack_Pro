@@ -39,7 +39,7 @@ export default function RootLayout({
                 alt="Book Amplify Logo" 
                 width={40} 
                 height={40} 
-                className="dark:invert"
+                
               />
               <span className="text-xl font-bold text-gray-900 dark:text-white">
                 Book Amplify
